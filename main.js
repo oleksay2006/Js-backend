@@ -38,7 +38,7 @@ function DataTable(config) {
     table.appendChild(head_tr);
     
     let table_num = 1;
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.data.length; i++) {
       let tr = document.createElement('tr');
       let tn = document.createElement('td'); tn.innerHTML = table_num;
       tn.style.border = '1px solid black';
@@ -50,7 +50,7 @@ function DataTable(config) {
         
         let td = document.createElement('td');
         td.style.border = '1px solid black';
-        td.innerHTML = data.data[i].config.columns[j].value;
+        td.innerHTML = data.data[i][сonfig.columns[j].value]
         tr.appendChild(td)
       }
       table.appendChild(tr);
