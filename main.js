@@ -16,6 +16,7 @@ function DataTable(config) {
   .then((data) => {
     console.log(data);
     console.log(data.data[1].name);
+    
     let parent = document.querySelector(config1.parent);
     let table = document.createElement('table');
    
@@ -38,7 +39,7 @@ function DataTable(config) {
     table.appendChild(head_tr);
     
     let table_num = 1;
-    for (let i = 0; i < data.data.length; i++) {
+    for (let i = 0; i < Object.keys(data.data).length; i++) {
       let tr = document.createElement('tr');
       let tn = document.createElement('td'); tn.innerHTML = table_num;
       tn.style.border = '1px solid black';
@@ -60,6 +61,23 @@ function DataTable(config) {
   parent.appendChild(table);
   });
 }
+
+// function DataTable(config) {
+//   const requestURL = config.apiUrl;
+//   console.log(requestURL);
+//   const xhr = new XMLHttpRequest();
+//   xhr.open('GET', requestURL);
+//   xhr.onload = () => {console.log(JSON.parse(xhr.response))};
+//   xhr.send();
+//   // console.log(array);
+// }
+
+
+
+
+
+
+
 
 const config1 = {
   parent: '#usersTable',
