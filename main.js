@@ -9,14 +9,17 @@ function DataTable(config) {
   // xhr.open('GET', requestURL);
   // xhr.onload = () => {console.log(JSON.parse(xhr.response))};
   // xhr.send();
+  let array;
   fetch(requestURL)
   .then((response) => {
     return response.json();
   })
   .then((data) => {
     console.log(data);
+    // console.log(data.data[1].name);
+    array = data;
+    console.log(array);
     console.log(data.data[1].name);
-    
     let parent = document.querySelector(config1.parent);
     let table = document.createElement('table');
    
@@ -51,15 +54,23 @@ function DataTable(config) {
         
         let td = document.createElement('td');
         td.style.border = '1px solid black';
-        td.innerHTML = data.data[i][сonfig.columns[j].value]
+        if (j == 4) {
+          let btn = document.createElement('button');
+          btn.innerHTML = 'Удалить'
+          btn.style.background = 'red';
+          td.appendChild(btn);
+        }
+        else {td.innerHTML = data.data[i+1][config.columns[j].value];}//data[i][config.columns[j].value] // => [config.columns[j].value] <=
         tr.appendChild(td)
       }
       table.appendChild(tr);
     }
 
 
-  parent.appendChild(table);
-  });
+    parent.appendChild(table);
+    
+  })
+  
 }
 
 // function DataTable(config) {
@@ -72,13 +83,6 @@ function DataTable(config) {
 //   // console.log(array);
 // }
 
-
-
-
-
-
-
-
 const config1 = {
   parent: '#usersTable',
   columns: [
@@ -86,6 +90,7 @@ const config1 = {
     {title: 'Фамилия', value: 'surname'},
     {title: 'Аватар', value: 'avatar'},
     {title: 'День Рождения', value: 'birthday'},
+    {title: 'Действия', value: 'actions'},
   ],
   apiUrl: "https://mock-api.shpp.me/oyatsentyuk/users"
 };
