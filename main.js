@@ -19,7 +19,7 @@ function DataTable(config) {
     // console.log(data.data[1].name);
     array = data;
     console.log(array);
-    console.log(data.data[1].name);
+    // console.log(data.data[1].name);
     let parent = document.querySelector(config1.parent);
     let table = document.createElement('table');
    
@@ -60,7 +60,7 @@ function DataTable(config) {
           btn.style.background = 'red';
           td.appendChild(btn);
         }
-        else {td.innerHTML = data.data[i+1][config.columns[j].value];}//data[i][config.columns[j].value] // => [config.columns[j].value] <=
+        else {td.innerHTML = data.data[i+2][config.columns[j].value];}//data[i][config.columns[j].value] // => [config.columns[j].value] <=
         tr.appendChild(td)
       }
       table.appendChild(tr);
@@ -96,3 +96,44 @@ const config1 = {
 };
 
 DataTable(config1);
+
+
+
+// fetch('https://jsonplaceholder.typicode.com/users')
+// .then((response) => {
+//   return response.json();
+// })
+// .then((data) => {
+//   console.log(data);
+//   fetch('https://jsonplaceholder.typicode.com/users', {
+//     method: 'DELETE',
+//     body: JSON.stringify(data) // body data type must match "Content-Type" header
+//   });
+// })
+
+// fetch('https://jsonplaceholder.typicode.com/users', {
+//   method: 'DELETE',
+//   headers: {
+//     0 : 'id'
+//   }
+//   // body: JSON.stringify(data) // body data type must match "Content-Type" header
+// }).then((response) => {
+//   return response.json();
+// })
+// .then((data) => {
+//   console.log(data);
+// });
+
+// fetch('https://mock-api.shpp.me/oyatsentyuk/users/1', {
+//   method: 'DELETE',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: null  //if you do not want to send any addional data,  replace the complete JSON.stringify(YOUR_ADDITIONAL_DATA) with null
+// })
+
+
+// fetch('https://jsonplaceholder.typicode.com/users', {
+//     method: 'DELETE',
+//     body: JSON.stringify(data) // body data type must match "Content-Type" header
+// });
