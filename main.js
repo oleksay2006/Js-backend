@@ -16,14 +16,19 @@ function DataTable(config) {
   })
   .then((data) => {
     console.log(data);
-    console.log(typeof data.data[2]);
+    // console.log(typeof data.data[2]);
+    // console.log(data.data[3].id);
     // console.log(data.data[1].name);
-    array = data;
-    console.log(array);
+    // array = data;
+    // console.log(array);
+    let addButton = document.createElement('button');
     // console.log(data.data[1].name);
     let parent = document.querySelector(config1.parent);
     let table = document.createElement('table');
-   
+    addButton.textContent = 'Добавить';
+    addButton.style.margin = '40px';
+    addButton.style.padding = '10px';
+    parent.appendChild(addButton);
     table.style.border = '1px solid black';
    
     // Add head of the table
@@ -63,6 +68,19 @@ function DataTable(config) {
         }
         if (j == 4) {
           let btn = document.createElement('button');
+
+          btn.onclick = function(id) {
+            id = data.data[i+1].id;         // Кнопка <=
+            console.log(id);
+            fetch('https://mock-api.shpp.me/oyatsentyuk/users/' + id, {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: null
+            })
+          }
+
           btn.innerHTML = 'Удалить'
           btn.style.background = 'red';
           td.appendChild(btn);
@@ -73,8 +91,46 @@ function DataTable(config) {
     }
 
 
+
+
+
+    addButton.onclick = function() {
+      let tr = document.createElement('tr');
+      let tn = document.createElement('td');
+      tn.innerHTML = table_num;
+      tn.style.border = '1px solid black';
+      table_num++;
+      tr.appendChild(tn);
+      for (let j = 0; j < config.columns.length; j++) {
+        let td = document.createElement('td');
+        let input = document.createElement('input');
+        td.style.border = '1px solid black';
+        if (j !== 4) {td.appendChild(input);}
+        tr.appendChild(td);
+        if (j == 4) {
+          let btn = document.createElement('button');
+
+          btn.onclick = function(id) {
+            id = data.data[i+1].id;         // Кнопка <=
+            console.log(id);
+            fetch('https://mock-api.shpp.me/oyatsentyuk/users/' + id, {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: null
+            })
+          }
+
+          btn.innerHTML = 'Удалить'
+          btn.style.background = 'red';
+          td.appendChild(btn);
+        }
+      }
+      table.appendChild(tr);
+    }
     parent.appendChild(table);
-    
+    console.log(table_num)
   })
   
 }
@@ -102,6 +158,38 @@ const config1 = {
 };
 
 DataTable(config1);
+
+// function addString(config) {
+//   let table = document.querySelector('#usersTable');
+//   let tr = document.createElement('tr');
+//   let input = document.createElement('input');
+//   for (let i = 0; i < config.columns.length; i++) {
+//     let td = document.createElement('td');
+//     td.style.border = '1px solid black';
+//     tr.appendChild(td);
+//     console.log("hello");
+//     // td.appendChild(input);
+//   }
+//   table.appendChild(tr);
+// }
+
+
+// setTimeout(addString(config1), 2000);
+// let addButton = document.querySelector('.add');
+// addButton.addEventListener('click', addString(config1));
+
+// fetch('https://example.com/delete-item/' + id, {
+//   method: 'DELETE',
+// })                                                       <======= !
+// .then(res => res.text()) // or res.json()
+// .then(res => console.log(res))
+
+
+
+
+
+
+
 
 // if typeof data.data[i] != undefined =>
 
