@@ -16,6 +16,7 @@ function DataTable(config) {
   })
   .then((data) => {
     console.log(data);
+    console.log(typeof data.data[2]);
     // console.log(data.data[1].name);
     array = data;
     console.log(array);
@@ -42,9 +43,11 @@ function DataTable(config) {
     table.appendChild(head_tr);
     
     let table_num = 1;
-    for (let i = 0; i < Object.keys(data.data).length; i++) {
+    for (let i = 0; i <= Object.keys(data.data).length; i++) {
       let tr = document.createElement('tr');
-      let tn = document.createElement('td'); tn.innerHTML = table_num;
+      let tn = document.createElement('td');
+      if (data.data[i+1] == undefined) {continue;}
+      else {tn.innerHTML = table_num;}
       tn.style.border = '1px solid black';
 
       table_num++;
@@ -54,13 +57,16 @@ function DataTable(config) {
         
         let td = document.createElement('td');
         td.style.border = '1px solid black';
+        if (data.data[i+1] == undefined) {continue;}//data[i][config.columns[j].value] // => [config.columns[j].value] <=
+        else {
+          if (j !== 4){td.innerHTML = data.data[i+1][config.columns[j].value];}
+        }
         if (j == 4) {
           let btn = document.createElement('button');
           btn.innerHTML = 'Удалить'
           btn.style.background = 'red';
           td.appendChild(btn);
         }
-        else {td.innerHTML = data.data[i+2][config.columns[j].value];}//data[i][config.columns[j].value] // => [config.columns[j].value] <=
         tr.appendChild(td)
       }
       table.appendChild(tr);
@@ -97,6 +103,7 @@ const config1 = {
 
 DataTable(config1);
 
+// if typeof data.data[i] != undefined =>
 
 
 // fetch('https://jsonplaceholder.typicode.com/users')
@@ -124,13 +131,17 @@ DataTable(config1);
 //   console.log(data);
 // });
 
-// fetch('https://mock-api.shpp.me/oyatsentyuk/users/1', {
+
+
+// fetch('https://mock-api.shpp.me/oyatsentyuk/users/5', {
 //   method: 'DELETE',
 //   headers: {
 //     'Content-Type': 'application/json'
 //   },
 //   body: null  //if you do not want to send any addional data,  replace the complete JSON.stringify(YOUR_ADDITIONAL_DATA) with null
 // })
+
+
 
 
 // fetch('https://jsonplaceholder.typicode.com/users', {
