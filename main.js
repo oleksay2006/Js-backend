@@ -97,6 +97,7 @@ function DataTable(config) {
     addButton.onclick = function() {
       let tr = document.createElement('tr');
       let tn = document.createElement('td');
+      let form = document.createElement('form');
       tn.innerHTML = table_num;
       tn.style.border = '1px solid black';
       table_num++;
@@ -104,6 +105,8 @@ function DataTable(config) {
       for (let j = 0; j < config.columns.length; j++) {
         let td = document.createElement('td');
         let input = document.createElement('input');
+        input.setAttribute('required', '');
+        form.appendChild(input);
         td.style.border = '1px solid black';
         if (j !== 4) {td.appendChild(input);}
         tr.appendChild(td);
@@ -127,6 +130,7 @@ function DataTable(config) {
           td.appendChild(btn);
         }
       }
+      // tr.appendChild(form);
       table.appendChild(tr);
     }
     parent.appendChild(table);
