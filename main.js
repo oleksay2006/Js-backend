@@ -97,16 +97,21 @@ function DataTable(config) {
     addButton.onclick = function() {
       let tr = document.createElement('tr');
       let tn = document.createElement('td');
-      let form = document.createElement('form');
+      let element = {};
       tn.innerHTML = table_num;
       tn.style.border = '1px solid black';
       table_num++;
       tr.appendChild(tn);
       for (let j = 0; j < config.columns.length; j++) {
         let td = document.createElement('td');
+        // let form = document.createElement('form');
         let input = document.createElement('input');
+        input.onchange = function() {
+          if (input.value !== ''){element[config.columns[j].value] = input.value; console.log(element)}
+          else {alert('Не все поля заполнены')}
+        };
         input.setAttribute('required', '');
-        form.appendChild(input);
+        // form.appendChild(input);
         td.style.border = '1px solid black';
         if (j !== 4) {td.appendChild(input);}
         tr.appendChild(td);
@@ -129,12 +134,14 @@ function DataTable(config) {
           btn.style.background = 'red';
           td.appendChild(btn);
         }
+        // if (input.value !== ''){console.log(element)};
       }
       // tr.appendChild(form);
       table.appendChild(tr);
+
     }
     parent.appendChild(table);
-    console.log(table_num)
+    console.log(table_num);
   })
   
 }
@@ -190,6 +197,9 @@ DataTable(config1);
 
 
 
+// let element = {};
+// if (input.value !== ''){element[config.columns[j].value] = input.value;}
+// else {alert('Не все поля заполнены')}
 
 
 
