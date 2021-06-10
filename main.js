@@ -16,6 +16,7 @@ function DataTable(config) {
   })
   .then((data) => {
     console.log(data);
+    console.log(Object.keys(data.data).length);
     // console.log(typeof data.data[2]);
     // console.log(data.data[3].id);
     // console.log(data.data[1].name);
@@ -51,7 +52,7 @@ function DataTable(config) {
     for (let i = 0; i <= Object.keys(data.data).length; i++) {
       let tr = document.createElement('tr');
       let tn = document.createElement('td');
-      if (data.data[i+1] == undefined) {continue;}
+      if (data.data[i] == undefined) {continue;}
       else {tn.innerHTML = table_num;}
       tn.style.border = '1px solid black';
 
@@ -62,15 +63,15 @@ function DataTable(config) {
         
         let td = document.createElement('td');
         td.style.border = '1px solid black';
-        if (data.data[i+1] == undefined) {continue;}//data[i][config.columns[j].value] // => [config.columns[j].value] <=
+        if (data.data[i] == undefined) {continue;}//data[i][config.columns[j].value] // => [config.columns[j].value] <=
         else {
-          if (j !== 4){td.innerHTML = data.data[i+1][config.columns[j].value];}
+          if (j !== 4){td.innerHTML = data.data[i][config.columns[j].value];}
         }
         if (j == 4) {
           let btn = document.createElement('button');
 
           btn.onclick = function(id) {
-            id = data.data[i+1].id;         // Кнопка <=
+            id = data.data[i].id;         // Кнопка <=
             console.log(id);
             fetch('https://mock-api.shpp.me/oyatsentyuk/users/' + id, {
               method: 'DELETE',
@@ -97,6 +98,7 @@ function DataTable(config) {
     addButton.onclick = function() {
       let tr = document.createElement('tr');
       let tn = document.createElement('td');
+      const url = 'https://mock-api.shpp.me/oyatsentyuk/users';
       let element = {};
       tn.innerHTML = table_num;
       tn.style.border = '1px solid black';
@@ -106,10 +108,16 @@ function DataTable(config) {
         let td = document.createElement('td');
         // let form = document.createElement('form');
         let input = document.createElement('input');
-        input.onchange = function() {
-          if (input.value !== ''){element[config.columns[j].value] = input.value; console.log(element)}
-          else {alert('Не все поля заполнены')}
-        };
+        input.addEventListener('keydown', function(e){if (e.keyCode === 13) {
+            if (input.value !== ''){element[config.columns[j].value] = input.value; console.log(element)}
+            else {alert('Не все поля заполнены')}
+          }});
+        // function validateAndCheck(e) {
+        //   if (e.keyCode === 13) {
+        //     if (input.value !== ''){element[config.columns[j].value] = input.value; console.log(element)}
+        //     else {alert('Не все поля заполнены')}
+        //   }
+        // };
         input.setAttribute('required', '');
         // form.appendChild(input);
         td.style.border = '1px solid black';
@@ -117,22 +125,34 @@ function DataTable(config) {
         tr.appendChild(td);
         if (j == 4) {
           let btn = document.createElement('button');
-
-          btn.onclick = function(id) {
-            id = data.data[i+1].id;         // Кнопка <=
-            console.log(id);
-            fetch('https://mock-api.shpp.me/oyatsentyuk/users/' + id, {
-              method: 'DELETE',
+          let btn_2 = document.createElement('button');
+          btn_2.innerHTML = 'Добавить';
+          btn_2.style.background = 'lightgreen';
+          btn_2.onclick = function() {
+            fetch(url, {
+              method: 'POST', // или 'PUT'
+              body: JSON.stringify(element), // данные могут быть 'строкой' или {объектом}!
               headers: {
                 'Content-Type': 'application/json'
-              },
-              body: null
-            })
+              }
+            });
           }
+          // btn.onclick = function(id) {
+          //   id = data.data[i+1].id;         // Кнопка <=
+          //   console.log(id);
+          //   fetch('https://mock-api.shpp.me/oyatsentyuk/users/' + id, {
+          //     method: 'DELETE',
+          //     headers: {
+          //       'Content-Type': 'application/json'
+          //     },
+          //     body: null
+          //   })
+          // }
 
-          btn.innerHTML = 'Удалить'
-          btn.style.background = 'red';
-          td.appendChild(btn);
+          // btn.innerHTML = 'Удалить'
+          // btn.style.background = 'red';
+          // td.appendChild(btn);
+          td.appendChild(btn_2);
         }
         // if (input.value !== ''){console.log(element)};
       }
